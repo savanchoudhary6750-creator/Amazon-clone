@@ -1,0 +1,208 @@
+/* GLOBAL */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #eaeded;
+}
+
+/* MAIN CONTAINER */
+
+.authContainer {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #232f3e,
+    #131921
+  );
+
+  padding: 20px;
+}
+
+/* LOGIN / SIGNUP BOX */
+
+.authBox {
+  width: 100%;
+  max-width: 420px;
+
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.2);
+
+  animation: fadeIn 0.5s ease;
+}
+
+/* AMAZON TITLE */
+
+.authLogo {
+  text-align: center;
+
+  font-size: 34px;
+
+  font-weight: bold;
+
+  margin-bottom: 25px;
+
+  color: #131921;
+}
+
+.authLogo span {
+  color: #f08804;
+}
+
+/* HEADING */
+
+.authBox h1 {
+  text-align: center;
+
+  margin-bottom: 30px;
+
+  color: #111;
+
+  font-size: 32px;
+}
+
+/* INPUTS */
+
+.authBox input {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  margin-bottom: 18px;
+
+  border: 1px solid #ccc;
+
+  border-radius: 8px;
+
+  font-size: 16px;
+
+  transition: 0.3s;
+}
+
+.authBox input:focus {
+  border-color: #f08804;
+
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(240,136,4,0.2);
+}
+
+/* BUTTON */
+
+.authBox button {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #ffd814;
+
+  color: #111;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+  margin-top: 10px;
+}
+
+.authBox button:hover {
+  background: #f7ca00;
+
+  transform: translateY(-2px);
+}
+
+/* TEXT */
+
+.authBox p {
+  text-align: center;
+
+  margin-top: 20px;
+
+  color: #555;
+
+  font-size: 15px;
+}
+
+/* LINKS */
+
+.authBox a {
+  color: #007185;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  margin-left: 5px;
+}
+
+.authBox a:hover {
+  text-decoration: underline;
+}
+
+/* EXTRA TEXT */
+
+.authInfo {
+  text-align: center;
+
+  margin-top: 18px;
+
+  font-size: 13px;
+
+  color: #777;
+
+  line-height: 1.6;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 500px) {
+
+  .authBox {
+    padding: 30px 20px;
+  }
+
+  .authBox h1 {
+    font-size: 26px;
+  }
+}

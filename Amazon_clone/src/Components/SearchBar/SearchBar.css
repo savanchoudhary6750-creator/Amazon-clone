@@ -1,0 +1,248 @@
+/* =========================
+   SEARCH BAR
+========================= */
+
+.searchBar {
+
+  width: 100%;
+
+  max-width: 650px;
+
+  margin: auto;
+
+  position: relative;
+}
+
+/* =========================
+   SEARCH CONTAINER
+========================= */
+
+.searchContainer {
+
+  display: flex;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: 8px;
+
+  background: white;
+
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* INPUT */
+
+.searchContainer input {
+
+  flex: 1;
+
+  padding: 13px 15px;
+
+  border: none;
+
+  outline: none;
+
+  font-size: 15px;
+
+  background: white;
+}
+
+/* BUTTON */
+
+.searchContainer button {
+
+  background: #febd69;
+
+  border: none;
+
+  padding: 0 22px;
+
+  font-size: 15px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.searchContainer button:hover {
+
+  background: #f3a847;
+}
+
+/* =========================
+   HISTORY DROPDOWN
+========================= */
+
+.historyBox {
+
+  position: absolute;
+
+  top: 110%;
+
+  left: 0;
+
+  width: 100%;
+
+  background: white;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 4px 18px rgba(0,0,0,0.15);
+
+  z-index: 9999;
+
+  overflow: hidden;
+
+  animation: dropdown 0.2s ease;
+}
+
+/* ANIMATION */
+
+@keyframes dropdown {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(-10px);
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.historyHeader {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 15px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.historyHeader h4 {
+
+  margin: 0;
+
+  font-size: 14px;
+
+  color: #111;
+}
+
+/* CLEAR BUTTON */
+
+.clearBtn {
+
+  background: none;
+
+  border: none;
+
+  color: #007185;
+
+  cursor: pointer;
+
+  font-size: 13px;
+}
+
+.clearBtn:hover {
+
+  text-decoration: underline;
+}
+
+/* =========================
+   HISTORY ITEM
+========================= */
+
+.historyItem {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 12px 15px;
+
+  transition: 0.2s ease;
+}
+
+.historyItem:hover {
+
+  background: #f7f7f7;
+}
+
+/* TEXT */
+
+.historyText {
+
+  cursor: pointer;
+
+  font-size: 14px;
+
+  color: #111;
+
+  flex: 1;
+}
+
+/* REMOVE BUTTON */
+
+.removeHistoryBtn {
+
+  border: none;
+
+  background: transparent;
+
+  color: #777;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  transition: 0.2s ease;
+}
+
+.removeHistoryBtn:hover {
+
+  color: red;
+
+  transform: scale(1.1);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+
+  .searchContainer input {
+
+    font-size: 14px;
+
+    padding: 11px;
+  }
+
+  .searchContainer button {
+
+    padding: 0 16px;
+
+    font-size: 14px;
+  }
+}

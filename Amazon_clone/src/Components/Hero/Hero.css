@@ -1,0 +1,137 @@
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+  height: 500px;
+
+  background-size: cover;
+
+  background-position: center;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: 1s ease-in-out;
+}
+
+
+/* Overlay */
+
+.heroOverlay {
+  background: rgba(0, 0, 0, 0.5);
+
+  padding: 40px;
+
+  border-radius: 10px;
+
+  text-align: center;
+
+  color: white;
+}
+
+.heroOverlay h1 {
+  font-size: 50px;
+
+  margin-bottom: 10px;
+}
+
+.heroOverlay h2 {
+  font-size: 35px;
+
+  color: #febd69;
+
+  margin-bottom: 20px;
+}
+
+.heroOverlay button {
+  padding: 12px 30px;
+
+  border: none;
+
+  background-color: #febd69;
+
+  color: black;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.heroOverlay button:hover {
+  background-color: #f3a847;
+}
+
+
+/* Slider Buttons */
+
+.prevBtn,
+.nextBtn {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  background: rgba(0, 0, 0, 0.5);
+
+  color: white;
+
+  border: none;
+
+  padding: 15px;
+
+  cursor: pointer;
+
+  font-size: 25px;
+
+  border-radius: 50%;
+
+  transition: 0.3s;
+}
+
+.prevBtn:hover,
+.nextBtn:hover {
+  background: black;
+}
+
+.prevBtn {
+  left: 20px;
+}
+
+.nextBtn {
+  right: 20px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+  .hero {
+    height: 350px;
+  }
+
+  .heroOverlay h1 {
+    font-size: 30px;
+  }
+
+  .heroOverlay h2 {
+    font-size: 22px;
+  }
+
+  .heroOverlay {
+    padding: 20px;
+  }
+}

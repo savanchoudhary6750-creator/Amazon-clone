@@ -1,0 +1,209 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #eaeded;
+  color: #111;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background: #131921;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar input {
+  width: 320px;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+}
+
+/* =========================
+   CATEGORY SECTION
+========================= */
+
+.categories {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.categories button {
+  padding: 10px 18px;
+  border: none;
+  background: #febd69;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.categories button:hover {
+  background: #f3a847;
+  transform: scale(1.05);
+}
+
+/* =========================
+   PRODUCT GRID (MAIN)
+========================= */
+
+.productContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  padding: 30px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* =========================
+   PRODUCT CARD (PRO LEVEL)
+========================= */
+
+.productCard {
+  background: white;
+  border-radius: 14px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.productCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* IMAGE */
+.productCard img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+
+.productCard:hover img {
+  transform: scale(1.05);
+}
+
+/* TITLE */
+.productCard h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+/* PRICE */
+.productCard p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #b12704;
+  margin-bottom: 10px;
+}
+
+/* BUTTON */
+.productCard button {
+  padding: 10px 14px;
+  border: none;
+  background: linear-gradient(135deg, #ffd814, #f7ca00);
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.productCard button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+  background: #131921;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .navbar input {
+    width: 100%;
+  }
+
+  .hero img {
+    height: 250px;
+  }
+
+  .productContainer {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 15px;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 500px) {
+  .productContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .hero img {
+    height: 200px;
+  }
+}
