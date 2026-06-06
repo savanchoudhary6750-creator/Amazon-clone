@@ -3,8 +3,6 @@ import {
   useEffect
 } from "react";
 
-import "./SearchBar.css";
-
 function SearchBar({
 
   products = [],
@@ -150,9 +148,9 @@ function SearchBar({
 
   return (
 
-    <div className="searchBar">
+    <div className="w-full max-w-2xl mx-auto relative">
 
-      <div className="searchContainer">
+      <div className="flex w-full rounded-lg overflow-hidden bg-white shadow-md">
 
         <input
           type="text"
@@ -170,9 +168,16 @@ function SearchBar({
           }
 
           onKeyDown={handleKeyDown}
+
+          className="flex-1 px-4 py-3 border-none outline-none text-gray-800 text-sm"
         />
 
-        <button onClick={handleSearch}>
+        <button 
+
+          onClick={handleSearch}
+
+          className="bg-amazon-gold hover:bg-amazon-goldHover text-black px-6 font-semibold transition-colors flex items-center justify-center"
+        >
           🔍
         </button>
 
@@ -183,19 +188,19 @@ function SearchBar({
       {showHistory &&
         history.length > 0 && (
 
-        <div className="historyBox">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg z-50 border border-gray-200">
 
-          <div className="historyHeader">
+          <div className="flex justify-between items-center p-4 border-b border-gray-200">
 
-            <h4>
+            <h4 className="font-semibold text-gray-800">
               Recent Searches
             </h4>
 
             <button
-              className="clearBtn"
+              className="text-xs text-blue-600 hover:text-blue-800 font-medium"
               onClick={clearHistory}
             >
-              Clear
+              Clear All
             </button>
 
           </div>
@@ -204,11 +209,11 @@ function SearchBar({
 
             <div
               key={index}
-              className="historyItem"
+              className="flex justify-between items-center p-3 hover:bg-gray-100 border-b border-gray-100 last:border-b-0 cursor-pointer"
             >
 
               <span
-                className="historyText"
+                className="text-gray-700 text-sm flex-1"
 
                 onClick={() => {
 
@@ -221,7 +226,7 @@ function SearchBar({
               </span>
 
               <button
-                className="removeHistoryBtn"
+                className="text-gray-400 hover:text-red-600 ml-2 text-lg"
 
                 onClick={() =>
                   removeHistoryItem(index)

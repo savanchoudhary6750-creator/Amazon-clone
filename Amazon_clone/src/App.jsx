@@ -1,52 +1,19 @@
-import { Routes, Route } from "react-router-dom";
+import React from "react";
 
-import Navbar from "./Components/Navbar/Navbar";
+// Routes
+import AppRoutes from "./routes/index.jsx";
+import ErrorBoundary from "./Components/ErrorBoundary.jsx";
 
-import Home from "./Components/Pages/Home";
-import Login from "./Components/Pages/Login";
-import Signup from "./Components/Pages/Signup";
-import Cart from "./Components/Pages/Cart";
-import AddProduct from "./Components/Pages/AddProduct";
-
-import ProductDetails from "./Components/Products/ProductDetails";
-
+/**
+ * App Component
+ * Main application component with routes only
+ * All context providers are in main.jsx
+ */
 function App() {
   return (
-    <>
-      <Navbar />
-
-      <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-
-        <Route
-          path="/login"
-          element={<Login />}
-        />
-
-        <Route
-          path="/signup"
-          element={<Signup />}
-        />
-
-        <Route
-          path="/cart"
-          element={<Cart />}
-        />
-
-        <Route
-          path="/add-product"
-          element={<AddProduct />}
-        />
-
-        <Route
-          path="/product/:id"
-          element={<ProductDetails />}
-        />
-      </Routes>
-    </>
+    <ErrorBoundary>
+      <AppRoutes />
+    </ErrorBoundary>
   );
 }
 

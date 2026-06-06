@@ -1,65 +1,134 @@
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import { cartAPI } from "../api/endpoints.js";
+import { useAuth } from "./AuthContext.jsx";
 
-const CartContext = createContext();
+/**
+ * Cart Context
+ * Manages shopping cart state
+ */
 
-export function CartProvider({ children }) {
+const CartContext = createContext(null);
 
-  const [cart, setCart] = useState([]);
+export const CartProvider = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  const [cart, setCart] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const addToCart = (product) => {
+  // Fetch cart when user authenticates
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchCart();
+    }
+  }, [isAuthenticated]);
 
-    setCart((prev) => {
+  const fetchCart = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-      const existing = prev.find((item) => item.id === product.id);
+    try {
+      const response = await cartAPI.get();
+      setCart(response.data);
+    } catch (err) {
+      setError(err.data?.message || err.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, qty: item.qty + 1 }
-            : item
-        );
-      }
+  const addToCart = useCallback(async (productId, quantity = 1) => {
+    setError(null);
 
-      return [...prev, { ...product, qty: 1 }];
-    });
+    try {
+      const response = await cartAPI.add(productId, quantity);
+      setCart(response.data);
+      return response.data;
+    } catch (err) {
+      setError(err.data?.message || err.message);
+      throw err;
+    }
+  }, []);
 
+  const updateQuantity = useCallback(async (productId, quantity) => {
+    setError(null);
+
+    try {
+      const response = await cartAPI.updateQuantity(productId, quantity);
+      setCart(response.data);
+      return response.data;
+    } catch (err) {
+      setError(err.data?.message || err.message);
+      throw err;
+    }
+  }, []);
+
+  const removeFromCart = useCallback(async (productId) => {
+    setError(null);
+
+    try {
+      const response = await cartAPI.remove(productId);
+      setCart(response.data);
+      return response.data;
+    } catch (err) {
+      setError(err.data?.message || err.message);
+      throw err;
+    }
+  }, []);
+
+  const clearCart = useCallback(async () => {
+    setError(null);
+
+    try {
+      const response = await cartAPI.clear();
+      setCart(response.data);
+      return response.data;
+    } catch (err) {
+      setError(err.data?.message || err.message);
+      throw err;
+    }
+  }, []);
+
+  const getCartStats = useCallback(() => {
+    if (!cart) {
+      return {
+        totalItems: 0,
+        totalPrice: 0,
+        totalDiscount: 0,
+        tax: 0,
+        shippingCost: 0,
+        finalPrice: 0,
+      };
+    }
+
+    return {
+      totalItems: cart.totalItems || 0,
+      totalPrice: cart.totalPrice || 0,
+      totalDiscount: cart.totalDiscount || 0,
+      tax: cart.tax || 0,
+      shippingCost: cart.shippingCost || 0,
+      finalPrice: cart.finalPrice || 0,
+    };
+  }, [cart]);
+
+  const value = {
+    cart,
+    isLoading,
+    error,
+    fetchCart,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    getCartStats,
   };
 
-  const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  };
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+};
 
-  const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, qty: item.qty + 1 }
-          : item
-      )
-    );
-  };
-
-  const decreaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id && item.qty > 1
-          ? { ...item, qty: item.qty - 1 }
-          : item
-      )
-    );
-  };
-
-  return (
-    <CartContext.Provider value={{
-      cart,
-      addToCart,
-      removeFromCart,
-      increaseQty,
-      decreaseQty
-    }}>
-      {children}
-    </CartContext.Provider>
-  );
-}
-
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within CartProvider");
+  }
+  return context;
+};
