@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: amazon-clone-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  server:
+    build: ./server
+    container_name: amazon-clone-api
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/amazon-clone
+      - JWT_SECRET=myamazonsecret123
+      - FRONTEND_URL=http://localhost:5173
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo-data:
