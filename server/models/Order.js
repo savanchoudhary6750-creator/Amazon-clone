@@ -67,7 +67,7 @@ const orderSchema = new mongoose.Schema(
 
     paymentStatus: {
       type: String,
-      enum: ["pending", "completed", "failed", "refunded"],
+      enum: ["pending", "completed", "failed", "refunded", "Paid"],
       default: "pending",
     },
 
@@ -146,6 +146,13 @@ orderSchema.pre("save", async function (next) {
 orderSchema.index({ userId: 1, createdAt: -1 });
 orderSchema.index({ orderStatus: 1 });
 orderSchema.index({ createdAt: -1 });
+
+// Virtual finalPrice field mapping to totalAmount
+orderSchema.virtual("finalPrice").get(function () {
+  return this.totalAmount;
+});
+orderSchema.set("toJSON", { virtuals: true });
+orderSchema.set("toObject", { virtuals: true });
 
 const Order = mongoose.model("Order", orderSchema);
 

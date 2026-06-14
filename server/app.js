@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocs from "./config/swagger.js";
 
@@ -15,13 +16,14 @@ import productRoutes from "./routes/productRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import wishlistRoutes from "./routes/wishlistRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
 // Security Middlewares
 app.use(helmet());
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: ["http://localhost:5173", "http://localhost:5174", process.env.FRONTEND_URL].filter(Boolean),
   credentials: true,
 }));
 
@@ -32,11 +34,14 @@ app.use(globalLimiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Request Logging Middleware
-app.use((req, res, next) => {
-  logger.info(`${req.method} ${req.originalUrl}`);
-  next();
-});
+// Request Logging Middleware (Morgan streamed through Winston)
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms", {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  })
+);
 
 // Swagger API Documentation Route
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
@@ -56,6 +61,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/wishlist", wishlistRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Error Handling Middlewares
 app.use(notFoundHandler);

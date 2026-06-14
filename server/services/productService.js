@@ -1,4 +1,5 @@
 import productRepository from "../repositories/productRepository.js";
+import User from "../models/User.js";
 import { ApiError } from "../utils/errors.js";
 import { HTTP_STATUS } from "../constants/httpStatus.js";
 import { ERROR_MESSAGES } from "../constants/errorMessages.js";
@@ -200,18 +201,25 @@ export class ProductService {
       );
     }
 
+    // Fetch user name
+    const user = await User.findById(userId);
+    const userName = user ? `${user.firstName} ${user.lastName}` : "Anonymous";
+
     // Add review
     const review = {
       userId,
+      userName,
       ...reviewData,
     };
 
     product.reviews.push(review);
     product.numReviews = product.reviews.length;
 
-    // Update rating
+    // Update rating & averageRating
     const totalRating = product.reviews.reduce((sum, r) => sum + r.rating, 0);
-    product.rating = Math.round((totalRating / product.reviews.length) * 10) / 10;
+    const avg = Math.round((totalRating / product.reviews.length) * 10) / 10;
+    product.rating = avg;
+    product.averageRating = avg;
 
     await product.save();
     return product;
