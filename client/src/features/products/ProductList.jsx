@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useProduct } from '../../app/providers/ProductContext.jsx';
 import ProductCard from './ProductCard.jsx';
+import ProductCardSkeleton from './ProductCardSkeleton.jsx';
+import ProductSectionErrorBoundary, { ProductErrorTrigger } from '../../components/common/ProductSectionErrorBoundary.jsx';
 
 export default function ProductList() {
   const { products, isLoading, error, fetchProducts } = useProduct();
@@ -33,22 +35,6 @@ export default function ProductList() {
       page: 1
     }));
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-xl text-gray-600">Loading products...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-red-600">Error: {error}</div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -126,17 +112,33 @@ export default function ProductList() {
 
           {/* Products Grid */}
           <div className="lg:col-span-3">
-            {products && products.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {products.map(product => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-              </div>
-            ) : (
-              <div className="bg-white p-8 rounded-lg shadow text-center">
-                <p className="text-gray-600">No products found</p>
-              </div>
-            )}
+            <ProductSectionErrorBoundary onRetry={() => fetchProducts(filters)}>
+              {isLoading && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {[...Array(6)].map((_, index) => (
+                    <ProductCardSkeleton key={index} />
+                  ))}
+                </div>
+              )}
+
+              {error && <ProductErrorTrigger error={error} />}
+
+              {!isLoading && !error && (
+                <>
+                  {products && products.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {products.map(product => (
+                        <ProductCard key={product._id} product={product} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="bg-white p-8 rounded-lg shadow text-center">
+                      <p className="text-gray-600">No products found</p>
+                    </div>
+                  )}
+                </>
+              )}
+            </ProductSectionErrorBoundary>
           </div>
         </div>
       </div>

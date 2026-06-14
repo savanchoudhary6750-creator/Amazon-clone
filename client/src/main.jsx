@@ -10,25 +10,28 @@ import { ProductProvider } from "./app/providers/ProductContext.jsx";
 import { WishlistProvider } from "./app/providers/WishlistContext.jsx";
 import { OrderProvider } from "./app/providers/OrderContext.jsx";
 import { ToastProvider } from "./app/providers/ToastProvider.jsx";
+import { ThemeProvider } from "./app/providers/ThemeContext.jsx";
 
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ToastProvider>
-      <BrowserRouter>
-        <AuthProvider>
-          <CartProvider>
-            <ProductProvider>
-              <WishlistProvider>
-                <OrderProvider>
-                  <App />
-                </OrderProvider>
-              </WishlistProvider>
-            </ProductProvider>
-          </CartProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </ToastProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <BrowserRouter>
+          <AuthProvider>
+            <CartProvider>
+              <ProductProvider>
+                <WishlistProvider>
+                  <OrderProvider>
+                    <App />
+                  </OrderProvider>
+                </WishlistProvider>
+              </ProductProvider>
+            </CartProvider>
+          </AuthProvider>
+        </BrowserRouter>
+      </ToastProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );

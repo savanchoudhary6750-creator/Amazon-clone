@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 
 const ToastContext = createContext(null);
 
@@ -39,6 +39,17 @@ export const ToastProvider = ({ children }) => {
   const info = useCallback((message, duration) => {
     return addToast(message, "info", duration);
   }, [addToast]);
+
+  // Global listener for API errors to automatically show toast error
+  useEffect(() => {
+    const handleApiError = (event) => {
+      error(event.detail);
+    };
+    window.addEventListener("api-error", handleApiError);
+    return () => {
+      window.removeEventListener("api-error", handleApiError);
+    };
+  }, [error]);
 
   const value = {
     toasts,
